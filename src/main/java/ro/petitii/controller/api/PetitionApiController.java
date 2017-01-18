@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 import ro.petitii.config.SmtpConfig;
+import ro.petitii.controller.BaseController;
 import ro.petitii.model.*;
 import ro.petitii.model.datatables.AttachmentResponse;
 import ro.petitii.model.datatables.CommentResponse;
@@ -53,7 +54,7 @@ import static ro.petitii.util.StringUtil.cleanHtml;
 @ControllerAdvice
 // url base for all class methods
 @RequestMapping("/api/petitions")
-public class PetitionApiController {
+public class PetitionApiController extends BaseController{
     private static final Logger LOGGER = LoggerFactory.getLogger(PetitionApiController.class);
 
     @Autowired
@@ -90,10 +91,7 @@ public class PetitionApiController {
     @Autowired
     private SmtpService smtpService;
     
-	@Autowired
-	private TranslationUtil translationService;
-
-    // will answer to compounded URL /api/petitions/user
+	// will answer to compounded URL /api/petitions/user
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
     public DataTablesOutput<PetitionResponse> getUserPetitions(@Valid DataTablesInput input, String status) {
@@ -205,7 +203,7 @@ public class PetitionApiController {
                                                                           HttpServletResponse response,
                                                                           Throwable e) throws IOException {
         LOGGER.warn("Max upload size exceeded", e);
-        String message = translationService.i18n("api.controller.petition.attachment_size_exceeded");
+        String message = i18n("api.controller.petition.attachment_size_exceeded");
         return ResponseEntity.unprocessableEntity().body(message);
     }
 
@@ -223,7 +221,7 @@ public class PetitionApiController {
         }
         LOGGER.error(rootCause.getMessage(), e);
         //TODO: verify if appropriate message
-        String message = translationService.i18n("api.controller.petition.attachment_size_exceeded");
+        String message = i18n("api.controller.petition.attachment_size_exceeded");
         return ResponseEntity.unprocessableEntity().body(message);
     }
 
@@ -370,8 +368,7 @@ public class PetitionApiController {
         EmailTemplate emailTemplate = emailTemplateService.findOneByCategory(EmailTemplate.Category.start_work);
         if (emailTemplate == null) {
             LOGGER.error("Email template not found for start work, using standard text messages ...");
-            String message = translationService.i18n("api.controller.petition.email_template_config_error");
-            result.put("warnMsg", message);
+            result.put("warnMsg", i18n("api.controller.petition.email_template_config_error"));
         }
 
         for (long id : petitionIds) {
@@ -384,8 +381,7 @@ public class PetitionApiController {
                 statusService.create(PetitionStatus.Status.IN_PROGRESS, pet, user);
                 Email email = new Email();
                 email.setSender(config.getUsername());
-                String message = translationService.i18n("api.controller.petition.registered_email_subject");
-                email.setSubject(message);
+                email.setSubject(i18n("api.controller.petition.registered_email_subject"));
                 email.setRecipients(pet.getPetitioner().getEmail());
 
                 try {
@@ -414,12 +410,10 @@ public class PetitionApiController {
         if (errors.size() > 0) {
             result.put("success", "false");
             String errorList = errors.stream().collect(Collectors.joining(", "));
-            String message = translationService.i18n("api.controller.petition.status_not_updated");
-            result.put("errorMsg", message + ": " + errorList);
+            result.put("errorMsg", i18n("api.controller.petition.status_not_updated") + ": " + errorList);
         } else {
             result.put("success", "true");
-            String message = translationService.i18n("api.controller.petition.status_updated");
-            result.put("errorMsg", message);
+            result.put("errorMsg", i18n("api.controller.petition.status_updated"));
         }
 
         return result;
@@ -431,7 +425,7 @@ public class PetitionApiController {
         String deadline = df.format(petition.getDeadline());
         
         String[] params = new String[]{petition.getRegNo().getNumber(), recDate, deadline};
-        String message = translationService.i18n("api.controller.petition.registered", params);
-        return message;
+        return i18n("api.controller.petition.registered", params);
     }
+	
 }

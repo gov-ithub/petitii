@@ -20,21 +20,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import ro.petitii.controller.BaseController;
 import ro.petitii.model.Contact;
 import ro.petitii.service.ContactService;
 import ro.petitii.util.TranslationUtil;
 
 @RestController
-public class ContactApiController {
+public class ContactApiController extends BaseController{
     
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContactApiController.class);
 	
 	@Autowired
     private ContactService contactService;
 	
-	@Autowired
-	private TranslationUtil translationService;
-
     @JsonView(DataTablesOutput.View.class)
     @RequestMapping(value = "/api/contacts", method = RequestMethod.POST)
     public DataTablesOutput<Contact> getContacts(@Valid DataTablesInput input) {
@@ -48,13 +46,11 @@ public class ContactApiController {
     	try{
     		contactService.delete(contactIds);
     		result.put("success", "true");
-    		String message = translationService.i18n("api.controller.contact.delete_successful");
-            result.put("errorMsg", message);
+    		result.put("errorMsg", i18n("api.controller.contact.delete_successful"));
     	}catch (Exception e){
     		LOGGER.info("Cannot delete contacts: " + Arrays.toString(contactIds), e);
     		result.put("success", "false");
-    		String message = translationService.i18n("api.controller.contact.delete_failed");
-            result.put("errorMsg", message);
+    		result.put("errorMsg", i18n("api.controller.contact.delete_failed"));
     	}
     	return result;
 	}

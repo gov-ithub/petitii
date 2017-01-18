@@ -23,7 +23,7 @@ import javax.mail.MessagingException;
 import java.util.*;
 
 @Controller
-public class UserManagementController extends ControllerBase {
+public class UserManagementController extends ViewController {
     private static final Logger logger = LoggerFactory.getLogger(UserManagementController.class);
 
     @Autowired
@@ -56,7 +56,7 @@ public class UserManagementController extends ControllerBase {
             if (Objects.equals(newPassword, duplicate)) {
                 // just to be safe if Parsley fails to check this
                 if (Objects.equals(currentPassword, newPassword)) {
-                    view.addObject("toast", i18nToast("controller.user.invalid_new_password", ControllerBase.ToastType.danger));
+                    view.addObject("toast", i18nToast("controller.user.invalid_new_password", ViewController.ToastType.danger));
                 } else {
                     User user = userService.findById(((UserDetail) auth.getPrincipal()).getUserId());
                     user.setPassword(passwordEncoder.encode(newPassword));
@@ -65,10 +65,10 @@ public class UserManagementController extends ControllerBase {
                     view.addObject("toast", i18nToast("controller.user.password_saved", ToastType.success));
                 }
             } else {
-                view.addObject("toast", i18nToast("controller.user.invalid_repeat_password", ControllerBase.ToastType.danger));
+                view.addObject("toast", i18nToast("controller.user.invalid_repeat_password", ViewController.ToastType.danger));
             }
         } else {
-            view.addObject("toast", i18nToast("controller.user.invalid_password", ControllerBase.ToastType.danger));
+            view.addObject("toast", i18nToast("controller.user.invalid_password", ViewController.ToastType.danger));
         }
 
         return view;
@@ -84,7 +84,7 @@ public class UserManagementController extends ControllerBase {
         ModelAndView view = new ModelAndView("reset_password");
         List<User> users = userService.findUserByEmail(username);
         if (users.isEmpty()) {
-            view.addObject("toast", i18nToast("controller.user.invalid_user", ControllerBase.ToastType.danger));
+            view.addObject("toast", i18nToast("controller.user.invalid_user", ViewController.ToastType.danger));
         } else {
             for (User user : users) {
                 String newPassword = UUID.randomUUID().toString();

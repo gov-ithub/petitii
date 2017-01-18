@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException;
+
+import ro.petitii.controller.BaseController;
 import ro.petitii.model.Attachment;
 import ro.petitii.service.AttachmentService;
 
@@ -22,7 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Controller
-public class AttachmentApiController {
+public class AttachmentApiController extends BaseController{
     private static final Logger LOGGER = LoggerFactory.getLogger(AttachmentApiController.class);
 
     @Autowired

@@ -8,13 +8,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import ro.petitii.controller.BaseController;
 import ro.petitii.model.User;
 import ro.petitii.service.UserService;
 
 import javax.validation.Valid;
 
 @RestController
-public class UserApiController {
+public class UserApiController extends BaseController{
     @Autowired
     private UserService userService;
 

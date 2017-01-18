@@ -16,6 +16,8 @@ public class JsonCategorySerializer extends JsonSerializer<EmailTemplate.Categor
     @Override
     public void serialize(EmailTemplate.Category category, JsonGenerator gen,
                           SerializerProvider provider) throws IOException {
-        gen.writeString(util.i18n(category));
+    	
+    	String key = "emailTemplate.category." + category.name().toLowerCase();
+		gen.writeString(util.i18n(key));
     }
 }

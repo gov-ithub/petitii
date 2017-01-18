@@ -38,11 +38,5 @@ public class TranslationUtil {
       	 return messageSource.getMessage(key, null, ro);
     }
     
-    public String i18n(EmailTemplate.Category category) {
-    	return messageSource.getMessage("emailTemplate.category." + category.name().toLowerCase(), null, ro);
-    }
 
-    public String i18n(PetitionStatus.Resolution resolution) {
-    	return messageSource.getMessage("petition.resolution." + resolution.name().toLowerCase(), null, ro);
-    }
 }

@@ -20,7 +20,7 @@ import ro.petitii.model.Contact;
 import ro.petitii.service.ContactService;
 
 @Controller
-public class ContactController extends ControllerBase {
+public class ContactController extends ViewController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContactController.class);
 	

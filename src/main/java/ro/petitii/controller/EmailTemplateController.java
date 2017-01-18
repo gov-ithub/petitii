@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
-public class EmailTemplateController extends ControllerBase {
+public class EmailTemplateController extends ViewController {
     @Autowired
     private EmailTemplateService emailTemplateService;
 

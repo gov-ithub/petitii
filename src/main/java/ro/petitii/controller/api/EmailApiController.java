@@ -9,6 +9,8 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+
+import ro.petitii.controller.BaseController;
 import ro.petitii.model.Attachment;
 import ro.petitii.model.Email;
 import ro.petitii.model.datatables.EmailResponse;
@@ -32,7 +34,7 @@ import java.util.Map;
 import static ro.petitii.controller.api.DatatableUtils.pageRequest;
 
 @RestController
-public class EmailApiController {
+public class EmailApiController extends BaseController{
     @Autowired
     private EmailService emailService;
 

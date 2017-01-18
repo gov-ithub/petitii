@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-public class PetitionController extends ControllerBase {
+public class PetitionController extends ViewController {
     @Autowired
     private UserService userService;
 

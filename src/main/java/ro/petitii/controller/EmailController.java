@@ -12,7 +12,7 @@ import ro.petitii.model.Email;
 import ro.petitii.service.EmailService;
 
 @Controller
-public class EmailController extends ControllerBase {
+public class EmailController extends ViewController {
     @Autowired
     private ImapConfig config;
 

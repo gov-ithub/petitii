@@ -31,7 +31,7 @@ import ro.petitii.service.template.EmailTemplateProcessorService;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
-public class UserController extends ControllerBase {
+public class UserController extends ViewController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 
